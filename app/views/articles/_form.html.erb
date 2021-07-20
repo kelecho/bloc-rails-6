@@ -1,0 +1,25 @@
+<%= form_with(model: @article, local: true) do |form| %>
+
+    <div class="field">
+        <%= form.label :title %>
+        <%= form.text_field :title %>
+    </div>
+
+    <div class="field">
+        <%= form.label :content %>
+        <%= form.rich_text_area :content %>
+    </div>
+
+    <div class="fields will">
+        <%= hidden_field_tag "article[category_ids][]", nil %>
+        <% Category.all.each do |categoria| %>
+            <%= check_box_tag "article[category_ids][]", categoria.id, @article.category_ids.include?(categoria.id), id: dom_id(categoria) %>
+            <%= label_tag dom_id(categoria), categoria.title %><br>      
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.submit "Submit", disabe_with: 'Submiting...' %>
+    </div>
+
+<% end %>
